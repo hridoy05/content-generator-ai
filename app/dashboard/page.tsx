@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import template from "@/utils/template";
 import Image from "next/image";
 import { Search } from "lucide-react";
@@ -14,7 +14,7 @@ export default function Page() {
   return (
     <div>
       <div className="p-10 my-5 mx-5 mb-5 rounded-lg bg-slate-200 dark:bg-slate-800 flex flex-col justify-center items-center">
-        <h1 className="text-xl">What would you like to crate today?</h1>
+        <h1 className="text-xl">What would you like to create today?</h1>
 
         <div className="w-full flex justify-center">
           <div className="flex gap-2 items-center p-2 border border-gray-300 dark:border-gray-700 shadow-lg rounded-md bg-transparent my-5 w-[50%]">
@@ -31,7 +31,7 @@ export default function Page() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-5">
-        {filteredTemplates.map((item) => (
+        {filteredTemplates.map((item: any) => (
           <Link key={item.slug} href={`/dashboard/template/${item.slug}`}>
             <div className="p-5 shadow-md rounded-md border flex flex-col gap-3 cursor-pointer hover:scale-105 transition-all">
               <Image src={item.icon} alt={item.name} width={50} height={50} />

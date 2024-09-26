@@ -1,6 +1,7 @@
-import SideNav from "@/components/nav/side-nav";
-import MobileNav from "@/components/nav/mobile-nav";
 import React from "react";
+import SideNav from "@/components/nav/SideNav";
+import MobileNav from "@/components/nav/MobileNav";
+
 
 export default function DashboardLayout({
   children,

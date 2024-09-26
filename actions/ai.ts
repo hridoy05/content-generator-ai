@@ -26,3 +26,5 @@ export async function runAi(text: string) {
 
   return result.response.text();
 }
+
+

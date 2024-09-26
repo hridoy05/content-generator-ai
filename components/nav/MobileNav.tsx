@@ -1,7 +1,7 @@
 import React from "react";
 import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import SideNav from "@/components/nav/side-nav";
+import SideNav from "@/components/nav/SideNav";
 
 export default function MobileNav() {
   return (
