@@ -1,10 +1,11 @@
 "use client"
-import { runAi } from '@/actions/ai'
+import { runAi, saveQuery } from '@/actions/ai'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import template from '@/utils/template'
 import { Template } from '@/utils/types'
+import { useUser } from '@clerk/nextjs'
 import { ArrowLeft, Copy, Link, Loader2Icon } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
@@ -21,7 +22,10 @@ function page({params}: {params: { slug: string }}) {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const editorRef = React.useRef<any>(null);
+  const { user } = useUser();
+  // console.log("useUser() in slug page", user);
+  const email = user?.primaryEmailAddress?.emailAddress || "";
+
   const t = template.find((item) => item.slug === params.slug) as Template
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -31,6 +35,8 @@ function page({params}: {params: { slug: string }}) {
     try {
       const data = await runAi(t.aiPrompt + query);
       setContent(data);
+      console.log(t, email, query, data);
+      await saveQuery(t, email, query, data);
     } catch (err) {
       setContent("An error occurred. Please try again.");
     } finally {
@@ -75,13 +81,13 @@ function page({params}: {params: { slug: string }}) {
               {item.field === "input" ? (
                 <Input
                   name={item.name}
-                  // onChange={(e) => setQuery(e.target.value)}
+                  onChange={(e) => setQuery(e.target.value)}
                   required={item.required}
                 />
               ) : (
                 <Textarea
                   name={item.name}
-                  // onChange={(e) => setQuery(e.target.value)}
+                  onChange={(e) => setQuery(e.target.value)}
                   required={item.required}
                 />
               )}

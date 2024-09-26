@@ -1,4 +1,8 @@
 "use server";
+
+import Query from "@/models/query";
+import db from "@/utils/db";
+
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const apiKey = process.env.GEMINI_API_KEY;
@@ -21,10 +25,35 @@ export async function runAi(text: string) {
     generationConfig,
     history: [],
   });
-
+console.log(text);
   const result = await chatSession.sendMessage(text);
 
   return result.response.text();
 }
 
 
+export async function saveQuery(
+  template: object,
+  email: string,
+  query: string,
+  content: string
+) {
+  try {
+    await db();
+    const newQuery = new Query({
+      template,
+      email,
+      query,
+      content,
+    });
+
+    await newQuery.save();
+    return {
+      ok: true,
+    };
+  } catch (err) {
+    return {
+      ok: false,
+    };
+  }
+}
