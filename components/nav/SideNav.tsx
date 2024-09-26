@@ -35,7 +35,6 @@ export default function SideNav() {
     },
   ];
 
-  console.log(path);
 
   return (
     <div className="flex flex-col h-full">

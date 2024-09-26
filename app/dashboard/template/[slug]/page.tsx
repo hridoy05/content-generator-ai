@@ -1,14 +1,51 @@
+"use client"
+import { runAi } from '@/actions/ai'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import template from '@/utils/template'
 import { Template } from '@/utils/types'
-import { ArrowLeft, Copy, Link } from 'lucide-react'
+import { ArrowLeft, Copy, Link, Loader2Icon } from 'lucide-react'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast';
+
+// Import React Quill dynamically to avoid SSR issues
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import "react-quill/dist/quill.snow.css";
 
 function page({params}: {params: { slug: string }}) {
+    // state
+  const [query, setQuery] = useState("");
+  const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const editorRef = React.useRef<any>(null);
   const t = template.find((item) => item.slug === params.slug) as Template
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const data = await runAi(t.aiPrompt + query);
+      setContent(data);
+    } catch (err) {
+      setContent("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+
+  };
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(content);
+      toast.success("Content copied to clipboard.");
+    } catch (err) {
+      toast.error("An error occurred. Please try again.");
+    }
+  };
   return (
     <div>
     <div className="flex justify-between mx-5 my-3">
@@ -18,7 +55,7 @@ function page({params}: {params: { slug: string }}) {
         </Button>
       </Link>
 
-      <Button>
+      <Button onClick={handleCopy}>
         <Copy /> <span className="ml-2">Copy</span>
       </Button>
     </div>
@@ -30,7 +67,7 @@ function page({params}: {params: { slug: string }}) {
           <p className="text-gray-500">{t.desc}</p>
         </div>
 
-        <form className="mt-6">
+        <form className="mt-6" onSubmit={handleSubmit}>
           {t.form.map((item) => (
             <div className="my-2 flex flex-col gap-2 mb-7">
               <label className="font-bold pb-5">{item.label}</label>
@@ -51,12 +88,29 @@ function page({params}: {params: { slug: string }}) {
             <Button
               type="submit"
               className="w-full py-6"
-            > "Generate content"
+              disabled={loading}
+            > 
+            {
+              loading ? (
+                <Loader2Icon className="animate-spin mr-2" />
+              ): (
+                "Generate content"
+              )
+            }
             </Button>
             </div>
           ))}
         </form>
       </div>
+      <div className="col-span-2">
+      <ReactQuill
+            value={content}
+            onChange={setContent}
+            theme="snow"
+            placeholder="Generated content will appear here."
+            className="h-96"
+          />
+        </div>
     </div>
   </div>
   )
