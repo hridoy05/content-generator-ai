@@ -24,7 +24,7 @@ You can use the following credentials to try out the demo:
 Here are some screenshots of the app in action:
 
 ### 1. **Home page**
-![Home page](https://github.com/user-attachments/assets/573e2af0-107c-4255-a97c-7de1c6f84c3)
+![Home page](https://github.com/user-attachments/assets/a2fc4703-6ee1-46f2-af26-0d036937d890)
 ### 2. **Dashboard Overview**
 ![Dashboard](https://github.com/user-attachments/assets/36e57777-e01d-4a6e-967a-0b66746a726d)
 ---
