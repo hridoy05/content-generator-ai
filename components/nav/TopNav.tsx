@@ -29,9 +29,11 @@ export default function TopNav() {
           className="cursor-pointer"
         />
       </Link>
+      <div>
       {!subscribed && (
         <Link href="/membership">🔥 Join free or $9.99/month</Link>
       )}
+      </div>
       <div className="flex items-center">
         {isSignedIn && (
           <Link

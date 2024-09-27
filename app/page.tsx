@@ -22,15 +22,17 @@ export default function Home() {
               </span>
             </div>
             <h1 className="text-white text-7xl font-bold bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 bg-clip-text text-transparent mb-4">
-              AI Content Generator
+             SAAS AI Content Generator
             </h1>
             <p className="text-white mb-5">
               Generate AI content for your blog, website, or social media with a
               single click and more
             </p>
+            <div>
             <Link href="/dashboard">
               <Button variant="outline">Get started</Button>
             </Link>
+            </div>
           </div>
         </div>
       </div>
