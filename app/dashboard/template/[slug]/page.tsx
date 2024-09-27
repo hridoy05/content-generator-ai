@@ -25,7 +25,7 @@ function page({params}: {params: { slug: string }}) {
 
   const { user} = useUser();
 
-  const { fetchUsage} = useUsage();
+  const { fetchUsage, subscribed, count } = useUsage(); 
   // console.log("useUser() in slug page", user);
   const email = user?.primaryEmailAddress?.emailAddress || "";
 
@@ -38,7 +38,6 @@ function page({params}: {params: { slug: string }}) {
     try {
       const data = await runAi(t.aiPrompt + query);
       setContent(data);
-      console.log(t, email, query, data);
       await saveQuery(t, email, query, data);
       fetchUsage()
     } catch (err) {
@@ -98,15 +97,17 @@ function page({params}: {params: { slug: string }}) {
             <Button
               type="submit"
               className="w-full py-6"
-              disabled={loading}
-            > 
-            {
-              loading ? (
-                <Loader2Icon className="animate-spin mr-2" />
-              ): (
-                "Generate content"
-              )
-            }
+              disabled={
+                loading ||
+                (!subscribed &&
+                  count >= Number(process.env.NEXT_PUBLIC_FREE_TIER_USAGE))
+              }
+            >
+              {loading && <Loader2Icon className="animate-spin mr-2" />}
+              {subscribed ||
+              count < Number(process.env.NEXT_PUBLIC_FREE_TIER_USAGE)
+                ? "Generate content"
+                : "Subscribe to generate content"}
             </Button>
             </div>
           ))}

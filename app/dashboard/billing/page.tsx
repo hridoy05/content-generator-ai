@@ -1,8 +1,13 @@
 "use client";
 import React from "react";
+import { createCustomerPortalSession } from "@/actions/stripe";
 import { Button } from "@/components/ui/button";
 
 export default function Billing() {
+  const handleClick = async () => {
+    const response = await createCustomerPortalSession();
+    window.location.href = response as string;
+  };
 
   return (
     <div>
@@ -12,7 +17,7 @@ export default function Billing() {
       </div>
 
       <div className="p-5">
-        <Button>Access Stripe Customer Portal</Button>
+        <Button onClick={handleClick}>Access Stripe Customer Portal</Button>
       </div>
     </div>
   );
