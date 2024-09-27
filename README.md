@@ -24,20 +24,20 @@ You can use the following credentials to try out the demo:
 Here are some screenshots of the app in action:
 
 ### 1. **Home page**
-![Home page](c:\Users\hridoy\Pictures\Saved Pictures\ai-conten1.png)
+![Home page](https://github.com/user-attachments/assets/573e2af0-107c-4255-a97c-7de1c6f84c3)
 ### 2. **Dashboard Overview**
-![Dashboard](https://your-image-url.com/ai-conten2.png)
+![Dashboard](https://github.com/user-attachments/assets/36e57777-e01d-4a6e-967a-0b66746a726d)
 ---
 
 ### 2. **Membership page**
 
-![Membership](https://your-image-url.com/ai-conten4.png)
+![Membership](https://github.com/user-attachments/assets/36b805c4-b1e6-48ab-9e7d-130a63df6769)
 
 ---
 
 ### 3. **User History page **
 
-![User History](https://your-image-url.com/ai-conten3.png))
+![User History](https://github.com/user-attachments/assets/7a4f3156-8120-4e7d-9a1c-d2ade035c9ee)
 
 
 ## 🎬 Demo
