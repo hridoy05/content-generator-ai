@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Usage from "./Usage";
 
 export default function SideNav() {
   const path = usePathname();
@@ -56,8 +57,11 @@ export default function SideNav() {
               </Link>
             </div>
           </li>
-        ))}
+        ))} 
       </ul>
+      <div className="pb-20 mt-auto">
+        <Usage />
+      </div>
     </div>
   );
 }

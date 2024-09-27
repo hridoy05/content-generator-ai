@@ -3,6 +3,7 @@ import { runAi, saveQuery } from '@/actions/ai'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { useUsage } from '@/context/usage'
 import template from '@/utils/template'
 import { Template } from '@/utils/types'
 import { useUser } from '@clerk/nextjs'
@@ -22,7 +23,9 @@ function page({params}: {params: { slug: string }}) {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { user } = useUser();
+  const { user} = useUser();
+
+  const { fetchUsage} = useUsage();
   // console.log("useUser() in slug page", user);
   const email = user?.primaryEmailAddress?.emailAddress || "";
 
@@ -37,6 +40,7 @@ function page({params}: {params: { slug: string }}) {
       setContent(data);
       console.log(t, email, query, data);
       await saveQuery(t, email, query, data);
+      fetchUsage()
     } catch (err) {
       setContent("An error occurred. Please try again.");
     } finally {
